@@ -22,3 +22,4 @@ The back-end Laravel application that supports the Peak ecosystem.
 4. Run `php artisan key:generate`
 5. Create a MySQL database on your local server and update the `.env` file accordingly.
 6. Run `php artisan:migrate` to install the database structure.
+7. Run `php artisan passport:keys` to generate the encryption keys required by Laravel Passport.
