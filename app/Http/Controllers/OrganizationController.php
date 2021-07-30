@@ -33,6 +33,10 @@ class OrganizationController extends Controller
             'name' => $request->input('name')
         ]);
 
+        // current user owns this organization 
+        $current_user_id = auth()->user()->id;
+        $organization->user()->attach($current_user_id);
+
         return $organization;
     }
 

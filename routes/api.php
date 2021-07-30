@@ -24,7 +24,7 @@ Route::post('/forgot', [UserAuthController::class, 'forgotPassword']);
 Route::post('/reset', [UserAuthController::class, 'resetPassword']);
 
 // Organizations
-Route::apiResource('/organizations', OrganizationController::class);
+Route::middleware('auth:api')->apiResource('/organizations', OrganizationController::class);
 
 // Locations
-Route::apiResource('/locations', LocationController::class);
+Route::middleware('auth:api')->apiResource('/locations', LocationController::class);

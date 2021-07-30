@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\User;
 use App\Models\Location;
 
 class Organization extends Model
@@ -20,6 +21,14 @@ class Organization extends Model
     protected $fillable = [ 
         'name' 
     ];
+
+    /**
+     * The user that owns the organization.
+     */
+    public function user()
+    {
+        return $this->belongsToMany(User::class);
+    }
 
     /**
      * Get the locations for the organization.
