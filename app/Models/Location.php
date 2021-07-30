@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+use App\Models\Organization;
+
 class Location extends Model
 {
     use SoftDeletes, HasFactory;
@@ -18,4 +20,11 @@ class Location extends Model
     protected $fillable = [ 
         'name' 
     ];
+
+    /**
+     * Get the organization that owns the location.
+     */
+    public function organization() {
+        return $this->belongsTo(Organization::class);
+    }
 }
