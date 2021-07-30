@@ -45,9 +45,9 @@ class User extends Authenticatable
     ];
 
     /**
-     * The locations that belong to the user.
+     * The organizations that belong to the user.
      */
-    public function locations()
+    public function organizations()
     {
         return $this->belongsToMany(Organization::class);
     }
