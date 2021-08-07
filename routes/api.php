@@ -17,6 +17,10 @@ use App\Http\Controllers\LocationController;
 |
 */
 
+Route::get('/', function() {
+    return ':)';
+});
+
 // Authentication
 Route::post('/register', [UserAuthController::class, 'register']);
 Route::post('/login', [UserAuthController::class, 'login']);
