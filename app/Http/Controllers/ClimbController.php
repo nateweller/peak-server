@@ -28,10 +28,10 @@ class ClimbController extends Controller
         $request->validate([
             'location_id' => 'required|filled|numeric',
             'name' => 'required|filled',
-            // 'grade' => '',
+            'grade' => 'string|nullable',
             'discipline' => 'required|filled',
-            // 'color' => '',
-            // 'created_at' => ''
+            'color' => 'string|nullable',
+            'created_at' => 'date|filled'
         ]);
 
         $climb = Climb::create([
@@ -68,10 +68,10 @@ class ClimbController extends Controller
         $request->validate([
             'location_id' => 'required|filled|numeric',
             'name' => 'required|filled',
-            // 'grade' => '',
+            'grade' => 'string|nullable',
             'discipline' => 'required|filled',
-            // 'color' => '',
-            // 'created_at' => ''
+            'color' => 'string|nullable',
+            'created_at' => 'date|filled'
         ]);
 
         if ($request->input('location_id')) {
