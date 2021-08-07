@@ -51,4 +51,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Organization::class);
     }
+
+    /**
+     * The locations that belong to organizations that belong to the user.
+     */
+    public function locations()
+    {
+        return $this->hasManyThrough(Organization::class, Group::class);
+    }
 }
