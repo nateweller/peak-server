@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\ClimbController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,3 +33,6 @@ Route::middleware('auth:api')->apiResource('/organizations', OrganizationControl
 
 // Locations
 Route::middleware('auth:api')->apiResource('/locations', LocationController::class);
+
+// Climbs
+Route::middleware('auth:api')->apiResource('/climbs', ClimbController::class);
