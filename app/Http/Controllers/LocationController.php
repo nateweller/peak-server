@@ -8,6 +8,16 @@ use App\Models\Location;
 class LocationController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Location::class, 'location');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -41,17 +51,11 @@ class LocationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Location  $location
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Location $location)
     {
-        $location = Location::find($id);
-
-        if (!$location) {
-            return response()->json(['message' => 'Location not found.'], 404);
-        }
-        
         return $location;
     }
 
@@ -59,21 +63,15 @@ class LocationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Locations     $location
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Location $location)
     {
         $request->validate([
             'organization_id' => 'filled|numeric',
             'name' => 'filled'
         ]);
-
-        $location = Location::find($id);
-
-        if (!$location) {
-            return response()->json(['Location not found.'], 404);
-        }
 
         if ($request->input('organization_id')) {
             $location->organization_id = (int) $request->input('organization_id');
@@ -91,17 +89,11 @@ class LocationController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Locations  $location
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Location $location)
     {
-        $location = Location::find($id);
-
-        if (!$location) {
-            return response()->json(['message' => 'Location not found.'], 404);
-        }
-        
         return $location->delete();
     }
 }
