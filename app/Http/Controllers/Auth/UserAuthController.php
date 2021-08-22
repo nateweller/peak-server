@@ -68,7 +68,7 @@ class UserAuthController extends Controller
 
         // catch all errors
         if ($reset_status !== Password::RESET_LINK_SENT) {
-            return response()->json([ 'message' => 'Error: ' . __($reset_status)]);
+            return response()->json([ 'message' => 'Error: ' . __($reset_status) ], 404);
         }
 
         return response()->json([ 'message' => "Password reset email sent." ]);

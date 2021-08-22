@@ -8,12 +8,23 @@ use App\Models\Organization;
 class OrganizationController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Organization::class, 'organization');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        // only show the organizations belonging to the current user
         return auth()->user()->organizations;
     }
 
@@ -43,17 +54,11 @@ class OrganizationController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Organization  $organization
      * @return \Illuminate\Http\Response
      */
     public function show(Organization $organization)
     {
-        $organization = Organization::find($id);
-
-        if (!$organization) {
-            return response()->json([ 'message' => 'Organization not found.'], 404);
-        }
-
         return $organization;
     }
 
@@ -61,16 +66,14 @@ class OrganizationController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Organization $organization)
     {
         $request->validate([
             'name' => 'filled'
         ]);
-
-        $organization = Organization::findOrFail($id);
 
         if ($request->input('name')) {
             $organization->name = $request->input('name');
@@ -79,23 +82,16 @@ class OrganizationController extends Controller
         $organization->save();
 
         return $organization;
-
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Organization $organization)
     {
-        $organization = Organization::find($id);
-
-        if (!$organization) {
-            return response()->json(['message' => 'Organization not found.'], 404);
-        }
-        
         return $organization->delete();
     }
 }
