@@ -59,4 +59,12 @@ class User extends Authenticatable
     {
         return $this->hasManyThrough(Organization::class, Group::class);
     }
+
+    /**
+     * The climb sends logged by the user.
+     */
+    public function sends()
+    {
+        return $this->hasMany(ClimbSend::class);
+    }
 }

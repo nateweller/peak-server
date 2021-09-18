@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\UserAuthController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ClimbController;
+use App\Http\Controllers\ClimbSendController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,4 +40,11 @@ Route::middleware('auth:api')->apiResource('/organizations', OrganizationControl
 Route::middleware('auth:api')->apiResource('/locations', LocationController::class);
 
 // Climbs
-Route::middleware('auth:api')->apiResource('/climbs', ClimbController::class);
+Route::apiResource('/climbs', ClimbController::class);
+Route::middleware('auth:api')
+    ->apiResource('/climbs/{climbId}/sends/{sendId}', ClimbSendController::class, [
+        'parameters' => [
+            'sendId' => 'climb_sends'
+        ]
+    ])
+    ->whereNumber('climbId');

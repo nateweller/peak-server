@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClimbFeedbackTable extends Migration
+class CreateClimbSendsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,18 @@ class CreateClimbFeedbackTable extends Migration
      */
     public function up()
     {
-        Schema::create('climb_feedback', function (Blueprint $table) {
+        Schema::create('climb_sends', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
 
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('climb_id')->constrained('climbs');
-
-            $table->number('rating')->nullable();
+            
+            $table->integer('rating')->nullable();
             $table->string('grade')->nullable();
-            $table->string('notes')->nullable();
+            $table->string('feedback')->nullable();
+
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -33,6 +35,6 @@ class CreateClimbFeedbackTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('climb_feedback');
+        Schema::dropIfExists('climb_sends');
     }
 }
