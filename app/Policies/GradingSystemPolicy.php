@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Climb;
+use App\Models\GradingSystem;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class ClimbPolicy
+class GradingSystemPolicy
 {
     use HandlesAuthorization;
 
@@ -25,10 +25,10 @@ class ClimbPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Climb  $climb
+     * @param  \App\Models\GradingSystem  $gradingSystem
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(?User $user, Climb $climb)
+    public function view(?User $user, GradingSystem $gradingSystem)
     {
         return true;
     }
@@ -41,6 +41,8 @@ class ClimbPolicy
      */
     public function create(User $user)
     {
+        // Users should only be able to create grading systems associated with
+        // organizations that they are owners of, this should be handled in controllers.
         return true;
     }
 
@@ -48,51 +50,50 @@ class ClimbPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Climb  $climb
+     * @param  \App\Models\GradingSystem  $gradingSystem
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Climb $climb)
+    public function update(User $user, GradingSystem $gradingSystem)
     {
-        // only the climb owner can update
-        return $user->climbs->contains($climb->id);
+        // User can only update grading systems from their own organization.
+        return $gradingSystem->organization->users->contains($user->id);
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Climb  $climb
+     * @param  \App\Models\GradingSystem  $gradingSystem
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Climb $climb)
+    public function delete(User $user, GradingSystem $gradingSystem)
     {
-        // only the climb owner can delete
-        return $user->climbs->contains($climb->id);
+        // User can only delete grading systems from their own organization.
+        return $gradingSystem->organization->users->contains($user->id);
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Climb  $climb
+     * @param  \App\Models\GradingSystem  $gradingSystem
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Climb $climb)
+    public function restore(User $user, GradingSystem $gradingSystem)
     {
-        // only the climb owner can restore
-        return $user->climbs->contains($climb->id);
+        // User can only restore grading systems from their own organization.
+        return $gradingSystem->organization->users->contains($user->id);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Climb  $climb
+     * @param  \App\Models\GradingSystem  $gradingSystem
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Climb $climb)
+    public function forceDelete(User $user, GradingSystem $gradingSystem)
     {
-        // no - soft deletes only
         return false;
     }
 }

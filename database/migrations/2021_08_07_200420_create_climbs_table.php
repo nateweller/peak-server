@@ -15,16 +15,17 @@ class CreateClimbsTable extends Migration
     {
         Schema::create('climbs', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
-            $table->softDeletes();
-
+            
             $table->foreignId('location_id')->nullable()->constrained('locations');
             $table->foreignId('user_id')->nullable()->constrained('users');
-
+            $table->foreignId('grade_id')->nullable()->constrained('grading_grades');
+            
             $table->string('name');
-            $table->string('grade')->nullable();
             $table->string('discipline');
             $table->string('color')->nullable();
+            
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

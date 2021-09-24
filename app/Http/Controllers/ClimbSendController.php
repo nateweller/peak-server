@@ -36,7 +36,7 @@ class ClimbSendController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'grade' => 'string|nullable',
+            'grade_id' => 'numeric|nullable',
             'rating' => 'numeric|nullable',
             'feedback' => 'string|nullable'
         ]);
@@ -44,7 +44,7 @@ class ClimbSendController extends Controller
         $climbSend = ClimbSend::create([
             'climb_id' => (int) $request->route('climbId'),
             'user_id' => auth()->user()->id,
-            'grade' => $request->input('grade'),
+            'grade_id' => $request->input('grade_id'),
             'rating' => $request->input('rating'),
             'feedback' => $request->input('feedback')
         ]);

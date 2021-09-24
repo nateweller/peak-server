@@ -18,9 +18,9 @@ class CreateClimbSendsTable extends Migration
 
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('climb_id')->constrained('climbs');
+            $table->foreignId('grade_id')->nullable()->constrained('grading_grades');
             
             $table->integer('rating')->nullable();
-            $table->string('grade')->nullable();
             $table->string('feedback')->nullable();
 
             $table->timestamps();

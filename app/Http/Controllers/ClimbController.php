@@ -8,6 +8,16 @@ use App\Models\Climb;
 class ClimbController extends Controller
 {
     /**
+     * Create the controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->authorizeResource(Climb::class);
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -27,8 +37,8 @@ class ClimbController extends Controller
     {
         $request->validate([
             'location_id' => 'required|filled|numeric',
+            'grade_id' => 'numeric|nullable',
             'name' => 'required|filled',
-            'grade' => 'string|nullable',
             'discipline' => 'required|filled',
             'color' => 'string|nullable',
             'created_at' => 'date|filled'
@@ -36,8 +46,9 @@ class ClimbController extends Controller
 
         $climb = Climb::create([
             'location_id' => (int) $request->input('location_id'),
+            'user_id' => $request->user('api')->id,
+            'grade_id' => $request->input('grade_id'),
             'name' => $request->input('name'),
-            'grade' => $request->input('grade'),
             'discipline' => $request->input('discipline'),
             'color' => $request->input('color')
         ]);
@@ -67,8 +78,8 @@ class ClimbController extends Controller
     {
         $request->validate([
             'location_id' => 'required|filled|numeric',
+            'grade_id' => 'numeric|nullable',
             'name' => 'required|filled',
-            'grade' => 'string|nullable',
             'discipline' => 'required|filled',
             'color' => 'string|nullable',
             'created_at' => 'date|filled'
@@ -82,8 +93,8 @@ class ClimbController extends Controller
             $climb->name = $request->input('name');
         }
 
-        if ($request->input('grade')) {
-            $climb->grade = $request->input('grade');
+        if ($request->input('grade_id')) {
+            $climb->grade = $request->input('grade_id');
         }
 
         if ($request->input('discipline')) {

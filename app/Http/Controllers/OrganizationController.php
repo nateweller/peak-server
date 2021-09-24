@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Organization;
 
 class OrganizationController extends Controller
@@ -36,19 +37,23 @@ class OrganizationController extends Controller
      */
     public function store(Request $request)
     {
+        $organization = null;
+
         $request->validate([
             'name' => 'required|filled'
         ]);
 
-        $organization = Organization::create([
-            'name' => $request->input('name')
-        ]);
+        return DB::transaction(function () use ($request, $organization) {
+            $organization = Organization::create([
+                'name' => $request->input('name')
+            ]);
 
-        // current user owns this organization 
-        $current_user_id = auth()->user()->id;
-        $organization->user()->attach($current_user_id);
+            // current user owns this organization 
+            $current_user_id = auth()->user()->id;
+            $organization->users()->attach($current_user_id);
 
-        return $organization;
+            return $organization;
+        });
     }
 
     /**

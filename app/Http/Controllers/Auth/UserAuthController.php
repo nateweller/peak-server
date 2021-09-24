@@ -41,7 +41,7 @@ class UserAuthController extends Controller
         ]);
 
         // attempt to log in
-        $logged_in = auth()->attempt($login_data);
+        $logged_in = auth('web')->attempt($login_data);
 
         // handle failed login attempt
         if (!$logged_in) {
@@ -49,9 +49,9 @@ class UserAuthController extends Controller
         }
 
         // generate a new API token for the user
-        $token = auth()->user()->createToken('API Token')->accessToken;
+        $token = auth('web')->user()->createToken('API Token')->accessToken;
 
-        return response()->json([ 'user' => auth()->user(), 'token' => $token ]);
+        return response()->json([ 'user' => auth('web')->user(), 'token' => $token ]);
     }
 
     public function forgotPassword(Request $request) 

@@ -61,6 +61,14 @@ class User extends Authenticatable
     }
 
     /**
+     * The climbs that belong to the user.
+     */
+    public function climbs()
+    {
+        return $this->hasMany(Climb::class);
+    }
+
+    /**
      * The climb sends logged by the user.
      */
     public function sends()

@@ -25,7 +25,7 @@ class Organization extends Model
     /**
      * The user that owns the organization.
      */
-    public function user()
+    public function users()
     {
         return $this->belongsToMany(User::class);
     }
@@ -36,5 +36,13 @@ class Organization extends Model
     public function locations()
     {
         return $this->hasMany(Location::class);
+    }
+
+    /**
+     * Get the grading systems used by the organization.
+     */
+    public function gradingSystems()
+    {
+        return $this->hasMany(GradingSystem::class);
     }
 }

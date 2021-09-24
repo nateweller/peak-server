@@ -18,7 +18,7 @@ class ClimbSend extends Model
     protected $fillable = [
         'climb_id',
         'user_id',
-        'grade',
+        'grade_id',
         'rating',
         'feedback'
     ];
@@ -37,5 +37,13 @@ class ClimbSend extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Get the grade.
+     */
+    public function grade()
+    {
+        return $this->belongsTo(GradingGrade::class);
     }
 }
