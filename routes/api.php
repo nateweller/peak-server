@@ -9,6 +9,7 @@ use App\Http\Controllers\ClimbController;
 use App\Http\Controllers\ClimbSendController;
 use App\Http\Controllers\GradingSystemController;
 use App\Http\Controllers\GradingGradeController;
+use App\Http\Controllers\ClimbColorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,13 +45,12 @@ Route::middleware('auth:api')->apiResource('/locations', LocationController::cla
 // Climbs
 Route::apiResource('/climbs', ClimbController::class);
 
-Route::middleware('auth:api')
-    ->apiResource('/climbs/{climbId}/sends/{sendId?}', ClimbSendController::class, [
-        'parameters' => [
-            'sendId' => 'climb_sends'
-        ]
-    ])
-    ->whereNumber('climbId');
+// Sends
+Route::middleware('auth:api')->apiResource('/sends', ClimbSendController::class);
 
+// Grading
 Route::middleware('auth:api')->apiResource('/grading_systems', GradingSystemController::class);
 Route::middleware('auth:api')->apiResource('/grading_grades', GradingGradeController::class);
+
+// Colors
+Route::middleware('auth:api')->apiResource('/climb_colors', ClimbColorController::class);

@@ -38,9 +38,9 @@ class ClimbController extends Controller
         $request->validate([
             'location_id' => 'required|filled|numeric',
             'grade_id' => 'numeric|nullable',
+            'color_id' => 'numeric|nullable',
             'name' => 'required|filled',
             'discipline' => 'required|filled',
-            'color' => 'string|nullable',
             'created_at' => 'date|filled'
         ]);
 
@@ -48,9 +48,9 @@ class ClimbController extends Controller
             'location_id' => (int) $request->input('location_id'),
             'user_id' => $request->user('api')->id,
             'grade_id' => $request->input('grade_id'),
+            'color_id' => $request->input('color_id'),
             'name' => $request->input('name'),
-            'discipline' => $request->input('discipline'),
-            'color' => $request->input('color')
+            'discipline' => $request->input('discipline')
         ]);
 
         return $climb;
@@ -79,9 +79,9 @@ class ClimbController extends Controller
         $request->validate([
             'location_id' => 'required|filled|numeric',
             'grade_id' => 'numeric|nullable',
+            'color_id' => 'numeric|nullable',
             'name' => 'required|filled',
             'discipline' => 'required|filled',
-            'color' => 'string|nullable',
             'created_at' => 'date|filled'
         ]);
 
@@ -97,13 +97,14 @@ class ClimbController extends Controller
             $climb->grade = $request->input('grade_id');
         }
 
+        if ($request->input('color_id')) {
+            $climb->color = $request->input('color_id');
+        }
+        
         if ($request->input('discipline')) {
             $climb->discipline = $request->input('discipline');
         }
 
-        if ($request->input('color')) {
-            $climb->color = $request->input('color');
-        }
 
         if ($request->input('created_at')) {
             $climb->created_at = $request->input('created_at');

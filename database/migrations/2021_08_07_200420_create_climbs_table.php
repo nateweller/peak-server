@@ -19,10 +19,10 @@ class CreateClimbsTable extends Migration
             $table->foreignId('location_id')->nullable()->constrained('locations');
             $table->foreignId('user_id')->nullable()->constrained('users');
             $table->foreignId('grade_id')->nullable()->constrained('grading_grades');
+            $table->foreignId('color_id')->nullable()->constrained('climb_colors');
             
             $table->string('name');
             $table->string('discipline');
-            $table->string('color')->nullable();
             
             $table->timestamps();
             $table->softDeletes();
