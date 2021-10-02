@@ -32,6 +32,7 @@ class Climb extends Model
      * @var array
      */
     protected $appends = [
+        'color',
         'grade',
         'send_count',
         'community_grade'
@@ -54,11 +55,29 @@ class Climb extends Model
     }
 
     /**
+     * Get the climb's hold color.
+     */
+    public function climbColor()
+    {
+        return $this->belongsTo(ClimbColor::class);
+    }
+
+    /**
      * Get the climb's sends.
      */
     public function sends() 
     {
         return $this->hasMany(ClimbSend::class);
+    }
+
+    /**
+     * Get color attribute.
+     * 
+     * @return ClimbColor
+     */
+    public function getColorAttribute() : ?ClimbColor 
+    {
+        return $this->climbColor()->select(['id', 'name', 'color'])->first();
     }
 
     /**

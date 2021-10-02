@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ClimbColor extends Model
+class Set extends Model
 {
     use HasFactory;
 
@@ -15,14 +15,7 @@ class ClimbColor extends Model
      * @var array
      */
     protected $fillable = [
-        'name',
-        'color'
+        'wall_id',
+        'date'
     ];
-
-    /**
-     * Get the climbs using this hold color.
-     */
-    public function climbs() {
-        return $this->hasMany(Climb::class);
-    }
 }

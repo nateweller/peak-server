@@ -94,17 +94,16 @@ class ClimbController extends Controller
         }
 
         if ($request->input('grade_id')) {
-            $climb->grade = $request->input('grade_id');
+            $climb->grade_id = $request->input('grade_id');
         }
 
         if ($request->input('color_id')) {
-            $climb->color = $request->input('color_id');
+            $climb->color_id = $request->input('color_id');
         }
         
         if ($request->input('discipline')) {
             $climb->discipline = $request->input('discipline');
         }
-
 
         if ($request->input('created_at')) {
             $climb->created_at = $request->input('created_at');

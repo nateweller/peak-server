@@ -10,6 +10,8 @@ use App\Http\Controllers\ClimbSendController;
 use App\Http\Controllers\GradingSystemController;
 use App\Http\Controllers\GradingGradeController;
 use App\Http\Controllers\ClimbColorController;
+use App\Http\Controllers\WallController;
+use App\Http\Controllers\SetController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,6 +43,12 @@ Route::middleware('auth:api')->apiResource('/organizations', OrganizationControl
 
 // Locations
 Route::middleware('auth:api')->apiResource('/locations', LocationController::class);
+
+// Walls
+Route::middleware('auth:api')->apiResource('/walls', WallController::class);
+
+// Sets
+Route::middleware('auth:api')->apiResource('/sets', SetController::class);
 
 // Climbs
 Route::apiResource('/climbs', ClimbController::class);
