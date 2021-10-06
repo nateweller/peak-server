@@ -20,9 +20,9 @@ class Climb extends Model
         'location_id',
         'user_id',
         'grade_id',
+        'color_id',
         'name',
         'discipline',
-        'color',
         'created_at'
     ];
 
@@ -51,7 +51,7 @@ class Climb extends Model
      */
     public function grade()
     {
-        return $this->belongsTo(GradingGrade::class);
+        return $this->belongsTo(GradingGrade::class, 'grade_id');
     }
 
     /**
@@ -59,7 +59,7 @@ class Climb extends Model
      */
     public function climbColor()
     {
-        return $this->belongsTo(ClimbColor::class);
+        return $this->belongsTo(ClimbColor::class, 'color_id');
     }
 
     /**
