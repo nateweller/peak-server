@@ -21,10 +21,35 @@ class GradingSystem extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'grades'
+    ];
+
+    /**
      * The organization that uses this grading system.
      */
     public function organization() 
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    /**
+     * The grades used by this grading system.
+     */
+    public function grades()
+    {
+        return $this->hasMany(GradingGrade::class);
+    }
+
+    /**
+     * Get the grades used by this grading system.
+     */
+    public function getGradesAttribute()
+    {
+        return $this->grades()->select(['id', 'name'])->get();
     }
 }
