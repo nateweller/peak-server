@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\GradingSystem;
+use App\Models\GradingGrade;
 
 class GradingSystemController extends Controller
 {
@@ -32,20 +34,41 @@ class GradingSystemController extends Controller
         $request->validate([
             'organization_id' => 'required|filled|numeric',
             'name' => 'string|required|filled',
-            'discipline' => 'string|required|filled'
+            'discipline' => 'string|required|filled',
+            'grades' => 'array',
+            'grades.*.name' => 'string|required|filled',
+            'grades.*.id' => 'numeric'
         ]);
         
         if (! $user->organizations->contains($request->input('organization_id'))) {
             abort(403, 'Unauthorized action.');
         }
 
-        $gradingSystem = GradingSystem::create([
-            'organization_id' => (int) $request->input('organization_id'),
-            'name' => $request->input('name'),
-            'discipline' => $request->input('discipline')
-        ]);
+        return DB::transaction(function () use ($request) {
 
-        return $gradingSystem;
+            $gradingSystem = GradingSystem::create([
+                'organization_id' => (int) $request->input('organization_id'),
+                'name' => $request->input('name'),
+                'discipline' => $request->input('discipline')
+            ]);
+
+            if (! empty($request->input('grades'))) {
+                foreach ($request->input('grades') as $loopIndex => $grade) {
+                    GradingGrade::updateOrCreate(
+                        [ 'id' => $request->input('id') ],
+                        [
+                            'grading_system_id' => $gradingSystem->id,
+                            'name' => $request->input('name'),
+                            'order' => $loopIndex
+                        ]
+                    );
+                }
+            }
+            
+            return $gradingSystem;
+
+        });
+
     }
 
     /**
