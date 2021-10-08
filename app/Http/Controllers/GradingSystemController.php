@@ -55,10 +55,10 @@ class GradingSystemController extends Controller
             if (! empty($request->input('grades'))) {
                 foreach ($request->input('grades') as $loopIndex => $grade) {
                     GradingGrade::updateOrCreate(
-                        [ 'id' => $request->input('id') ],
+                        [ 'id' => $grade['id'] ?? null ],
                         [
                             'grading_system_id' => $gradingSystem->id,
-                            'name' => $request->input('name'),
+                            'name' => $grade['name'],
                             'order' => $loopIndex
                         ]
                     );
@@ -104,9 +104,24 @@ class GradingSystemController extends Controller
             $gradingSystem->discipline = $request->input('discipline');
         }
 
-        $gradingSystem->save();
+        return DB::transaction(function () use ($gradingSystem, $request) {
+            $gradingSystem->save();
 
-        return $gradingSystem;
+            if (! empty($request->input('grades'))) {
+                foreach ($request->input('grades') as $loopIndex => $grade) {
+                    GradingGrade::updateOrCreate(
+                        [ 'id' => $grade['id'] ?? null ],
+                        [
+                            'grading_system_id' => $gradingSystem->id,
+                            'name' => $grade['name'],
+                            'order' => $loopIndex
+                        ]
+                    );
+                }
+            }
+
+            return $gradingSystem;
+        });
     }
 
     /**

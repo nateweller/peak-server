@@ -50,6 +50,6 @@ class GradingSystem extends Model
      */
     public function getGradesAttribute()
     {
-        return $this->grades()->select(['id', 'name'])->orderBy('order', 'asc')->get();
+        return $this->grades()->select(['id', 'name', 'order'])->orderBy('order', 'asc')->get();
     }
 }
