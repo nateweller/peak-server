@@ -15,12 +15,13 @@ class CreateLocationsTable extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->id();
+            
+            $table->foreignId('organization_id')->constrained('organizations');
+            
+            $table->string('name');
+            
             $table->timestamps();
             $table->softDeletes();
-
-            $table->foreignId('organization_id')->constrained('organizations');
-
-            $table->string('name');
         });
     }
 

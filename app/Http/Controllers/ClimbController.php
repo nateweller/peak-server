@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Climb;
+use Illuminate\Support\Facades\DB;
 
 class ClimbController extends Controller
 {
@@ -22,9 +23,26 @@ class ClimbController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Climb::all();
+        $climbs = (new Climb)->newQuery();
+
+        if ($request->has('sort')) {
+            switch ($request->sort) {
+                case 'grade':
+                    return Climb::leftJoin('grading_grades', 'climbs.grade_id', '=', 'grading_grades.id')
+                            ->orderBy('grading_grades.order')
+                            ->select('climbs.*')
+                            ->get();
+
+                case 'date':
+                default:
+                    $climbs->orderBy('created_at', 'ASC');
+                    break;
+            }
+        }
+
+        return $climbs->get();
     }
 
     /**
