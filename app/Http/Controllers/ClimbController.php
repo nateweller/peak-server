@@ -28,16 +28,23 @@ class ClimbController extends Controller
         $climbs = (new Climb)->newQuery();
 
         if ($request->has('sort')) {
+
+            $order = 'asc';
+            if (strpos($request->sort, '_') >= 0) {
+                $order = explode('_', $request->sort)[1];
+            }
+
             switch ($request->sort) {
-                case 'grade':
+                case 'grade_asc':
+                case 'grade_desc':
                     return Climb::leftJoin('grading_grades', 'climbs.grade_id', '=', 'grading_grades.id')
-                            ->orderBy('grading_grades.order')
+                            ->orderBy('grading_grades.order', $order)
                             ->select('climbs.*')
                             ->get();
-
-                case 'date':
+                case 'date_asc':
+                case 'date_desc':
                 default:
-                    $climbs->orderBy('created_at', 'ASC');
+                    $climbs->orderBy('created_at', $order);
                     break;
             }
         }

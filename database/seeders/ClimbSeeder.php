@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Climb;
 
 class ClimbSeeder extends Seeder
 {
@@ -14,7 +15,7 @@ class ClimbSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('climbs')->insert([
+        Climb::create([
             'wall_id' => 1,
             'user_id' => 1,
             'grade_id' => 1,
@@ -23,7 +24,7 @@ class ClimbSeeder extends Seeder
             'discipline' => 'BOULDER'
         ]);
 
-        DB::table('climbs')->insert([
+        Climb::create([
             'wall_id' => 1,
             'user_id' => 1,
             'grade_id' => 5,
@@ -32,7 +33,7 @@ class ClimbSeeder extends Seeder
             'discipline' => 'BOULDER'
         ]);
 
-        DB::table('climbs')->insert([
+        Climb::create([
             'wall_id' => 1,
             'user_id' => 1,
             'grade_id' => 2,
@@ -41,7 +42,7 @@ class ClimbSeeder extends Seeder
             'discipline' => 'BOULDER'
         ]);
 
-        DB::table('climbs')->insert([
+        Climb::create([
             'wall_id' => 1,
             'user_id' => 1,
             'grade_id' => 7,
@@ -50,7 +51,7 @@ class ClimbSeeder extends Seeder
             'discipline' => 'BOULDER'
         ]);
 
-        DB::table('climbs')->insert([
+        Climb::create([
             'wall_id' => 1,
             'user_id' => 1,
             'grade_id' => 3,

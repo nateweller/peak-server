@@ -35,7 +35,8 @@ class Climb extends Model
         'color',
         'grade',
         'send_count',
-        'community_grade'
+        'community_grade',
+        'average_rating'
     ];
 
     /**
@@ -124,7 +125,7 @@ class Climb extends Model
             return null;
         }
 
-        $averageGradeIndex = round($votesSum / $votesTotal);
+        $averageGradeIndex = round($votesSum / $votesTotal) - 1;
         $averageGradeId = $votes[$averageGradeIndex]->grade_id;
 
         $averageGrade = GradingGrade::select('id', 'name')->find($averageGradeId);
@@ -135,6 +136,13 @@ class Climb extends Model
         }
 
         return $averageGrade;
+    }
+
+    public function getAverageRatingAttribute() 
+    {
+        return (int) $this->sends()->avg('rating');
+
+        return $ratings;
     }
 }
 
