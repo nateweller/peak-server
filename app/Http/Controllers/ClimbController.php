@@ -30,22 +30,25 @@ class ClimbController extends Controller
         if ($request->has('sort')) {
 
             $order = 'asc';
-            if (strpos($request->sort, '_') >= 0) {
+            if (strpos($request->sort, '_') !== false) {
                 $order = explode('_', $request->sort)[1];
             }
 
             switch ($request->sort) {
                 case 'grade_asc':
                 case 'grade_desc':
-                    return Climb::leftJoin('grading_grades', 'climbs.grade_id', '=', 'grading_grades.id')
+                    $climbs = $climbs->leftJoin('grading_grades', 'climbs.grade_id', '=', 'grading_grades.id')
                             ->orderBy('grading_grades.order', $order)
-                            ->select('climbs.*')
-                            ->get();
+                            ->select('climbs.*');
                 case 'date_asc':
                 case 'date_desc':
                 default:
-                    $climbs->orderBy('created_at', $order);
+                    $climbs = $climbs->orderBy('created_at', $order);
                     break;
+            }
+
+            if ($request->discipline) {
+                $climbs = $climbs->where('discipline', '=', $request->discipline);
             }
         }
 

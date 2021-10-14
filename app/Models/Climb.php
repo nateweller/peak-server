@@ -115,21 +115,25 @@ class Climb extends Model
                         ->orderBy('grading_grades.order')
                         ->get();
 
-        $votesSum = 0;
-        $votesTotal = 0;
-        foreach ($votes as $index => $vote) {
-            $votesSum = ($index + 1) * $vote->vote_count;
-            $votesTotal += $vote->vote_count;
+        /**
+         * @todo This calculation depends on the "order" attribute of grades to 
+         *       be perfectly saved. While I would like that to always be true,
+         *       it doesn't feel great writing code that relies on that...
+         */
+        $sum = 0;
+        $count = 0;
+        foreach ($votes as $vote) {
+            $sum += $vote->order * $vote->vote_count;
+            $count += $vote->vote_count;
         }
-        if ($votesTotal === 0) {
+        if ($count === 0) {
             return null;
-        }
+        } 
 
-        $averageGradeIndex = round($votesSum / $votesTotal) - 1;
-        $averageGradeId = $votes[$averageGradeIndex]->grade_id;
+        $averageOrder = ceil($sum / $count);
 
-        $averageGrade = GradingGrade::select('id', 'name')->find($averageGradeId);
-        $averageGrade->vote_count = $votesTotal;
+        $averageGrade = GradingGrade::select('id', 'name')->where('order', $averageOrder)->first();
+        $averageGrade->vote_count = $count;
 
         if (! $averageGrade) {
             return null;
