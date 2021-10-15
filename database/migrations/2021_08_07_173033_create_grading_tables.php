@@ -21,6 +21,7 @@ class CreateGradingTables extends Migration
             $table->string('name');
             $table->string('discipline');
 
+            $table->softDeletes();
             $table->timestamps();
         });
 
@@ -32,6 +33,7 @@ class CreateGradingTables extends Migration
             $table->string('name');
             $table->integer('order');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

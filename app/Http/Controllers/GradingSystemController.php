@@ -108,8 +108,9 @@ class GradingSystemController extends Controller
             $gradingSystem->save();
 
             if (! empty($request->input('grades'))) {
+                $grade_ids;
                 foreach ($request->input('grades') as $loopIndex => $grade) {
-                    GradingGrade::updateOrCreate(
+                    $gradingGrade = GradingGrade::updateOrCreate(
                         [ 'id' => $grade['id'] ?? null ],
                         [
                             'grading_system_id' => $gradingSystem->id,
@@ -117,7 +118,10 @@ class GradingSystemController extends Controller
                             'order' => $loopIndex
                         ]
                     );
+                    $grade_ids[] = $gradingGrade->id;
                 }
+                // Delete any grades that were not included in the request.
+                GradingGrade::whereNotIn('id', $grade_ids)->delete();
             }
 
             return $gradingSystem;
