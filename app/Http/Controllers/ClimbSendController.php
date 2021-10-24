@@ -19,12 +19,21 @@ class ClimbSendController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return ClimbSend::all();
+        $climbSends = (new ClimbSend)->newQuery();
+
+        if ($request->with_feedback) {
+            $climbSends = $climbSends
+                            ->whereNotNull('feedback')
+                            ->orWhereNotNull('rating')
+                            ->orWhereNotNull('grade_id');
+        }
+
+        return $climbSends->get();
     }
 
     /**

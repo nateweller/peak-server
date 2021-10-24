@@ -12,6 +12,7 @@ use App\Http\Controllers\GradingGradeController;
 use App\Http\Controllers\ClimbColorController;
 use App\Http\Controllers\WallController;
 use App\Http\Controllers\SetController;
+use App\Http\Controllers\ReportsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,3 +63,6 @@ Route::middleware('auth:api')->apiResource('/grading_grades', GradingGradeContro
 
 // Colors
 Route::middleware('auth:api')->apiResource('/climb_colors', ClimbColorController::class);
+
+// Reports
+Route::middleware('auth:api')->get('/reports/grade_summary', [ReportsController::class, 'gradeSummary']);
