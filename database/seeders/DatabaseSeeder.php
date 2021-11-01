@@ -21,7 +21,8 @@ class DatabaseSeeder extends Seeder
             SetSeeder::class,
             ClimbColorSeeder::class,
             GradingSeeder::class,
-            ClimbSeeder::class
+            ClimbSeeder::class,
+            ClimbSendSeeder::class
         ]);
     }
 }

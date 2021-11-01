@@ -20,107 +20,50 @@ class GradingSeeder extends Seeder
             'discipline' => 'BOULDER'
         ]);
 
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V0',
-            'order' => 0
+        DB::table('grading_systems')->insert([
+            'organization_id' => 1,
+            'name' => 'Lead',
+            'discipline' => 'LEAD'
         ]);
 
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V1',
-            'order' => 1
+        DB::table('grading_systems')->insert([
+            'organization_id' => 1,
+            'name' => 'Top Rope',
+            'discipline' => 'TOP_ROPE'
         ]);
 
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V2',
-            'order' => 2
-        ]);
+        $v_grades = ['V0', 'V1', 'V2', 'V3', 'V4', 'V5', 'V6', 'V7', 'V8', 'V9', 'V10', 'V11', 'V12', 'V13', 'V14', 'V15', 'V16'];
+        foreach ($v_grades as $loopIndex => $grade) {
+            DB::table('grading_grades')->insert([
+                'grading_system_id' => 1,
+                'name' => $grade,
+                'order' => $loopIndex
+            ]);
+        }
 
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V3',
-            'order' => 3
-        ]);
+        $sport_grades = [
+            '5.5', '5.6', '5.7', '5.8', '5.9', 
+            '5.10a', '5.10b', '5.10c', '5.10d', 
+            '5.11a', '5.11b', '5.11c', '5.11d', 
+            '5.12a', '5.12b', '5.12c', '5.12d', 
+            '5.13a', '5.13b', '5.13c', '5.13d', 
+            '5.14a', '5.14b', '5.14c', '5.14d', 
+            '5.15a', '5.15b', '5.15c', '5.15d', 
+            '5.16a', '5.16b', '5.16c', '5.16d'
+        ];
+        foreach ($sport_grades as $loopIndex => $grade) {
+            DB::table('grading_grades')->insert([
+                'grading_system_id' => 2,
+                'name' => $grade,
+                'order' => $loopIndex
+            ]);
 
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V4',
-            'order' => 4
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V5',
-            'order' => 5
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V6',
-            'order' => 6
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V7',
-            'order' => 7
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V8',
-            'order' => 8
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V9',
-            'order' => 9
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V10',
-            'order' => 10
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V11',
-            'order' => 11
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V12',
-            'order' => 12
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V13',
-            'order' => 13
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V14',
-            'order' => 14
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V15',
-            'order' => 15
-        ]);
-
-        DB::table('grading_grades')->insert([
-            'grading_system_id' => 1,
-            'name' => 'V16',
-            'order' => 16
-        ]);
+            DB::table('grading_grades')->insert([
+                'grading_system_id' => 3,
+                'name' => $grade,
+                'order' => $loopIndex
+            ]);
+        }
 
     }
 }
