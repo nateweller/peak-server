@@ -19,4 +19,26 @@ class Wall extends Model
         'name',
         'order'
     ];
+
+     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'location'
+    ];
+
+    /**
+     * Get the location that owns the wall.
+     */
+    public function location()
+    {
+        return $this->belongsTo(Location::class);
+    }
+
+    public function getLocationAttribute()
+    {
+        return $this->location()->select(['id', 'name'])->first();
+    }
 }
