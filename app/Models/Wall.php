@@ -37,6 +37,11 @@ class Wall extends Model
         return $this->belongsTo(Location::class);
     }
 
+    public function climbs()
+    {
+        return $this->hasMany(Climb::class);
+    }
+
     public function getLocationAttribute()
     {
         return $this->location()->select(['id', 'name'])->first();

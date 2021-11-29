@@ -64,7 +64,7 @@ class ClimbController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'location_id' => 'required|filled|numeric',
+            'wall_id' => 'required|filled|numeric',
             'grade_id' => 'numeric|nullable',
             'color_id' => 'numeric|nullable',
             'name' => 'required|filled',
@@ -73,7 +73,7 @@ class ClimbController extends Controller
         ]);
 
         $climb = Climb::create([
-            'location_id' => (int) $request->input('location_id'),
+            'wall_id' => (int) $request->input('wall_id'),
             'user_id' => $request->user('api')->id,
             'grade_id' => $request->input('grade_id'),
             'color_id' => $request->input('color_id'),
@@ -105,7 +105,7 @@ class ClimbController extends Controller
     public function update(Request $request, Climb $climb)
     {
         $request->validate([
-            'location_id' => 'required|filled|numeric',
+            'wall_id' => 'required|filled|numeric',
             'grade_id' => 'numeric|nullable',
             'color_id' => 'numeric|nullable',
             'name' => 'required|filled',
@@ -113,8 +113,8 @@ class ClimbController extends Controller
             'created_at' => 'date|filled'
         ]);
 
-        if ($request->input('location_id')) {
-            $climb->location_id = (int) $request->input('location_id');
+        if ($request->input('wall_id')) {
+            $climb->wall_id = (int) $request->input('wall_id');
         }
 
         if ($request->input('name')) {

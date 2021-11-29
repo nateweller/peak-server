@@ -17,7 +17,7 @@ class Climb extends Model
      * @var array
      */
     protected $fillable = [
-        'location_id',
+        'wall_id',
         'user_id',
         'grade_id',
         'color_id',
@@ -36,7 +36,9 @@ class Climb extends Model
         'grade',
         'send_count',
         'community_grade',
-        'average_rating'
+        'average_rating',
+        'wall',
+        'user'
     ];
 
     /**
@@ -69,6 +71,14 @@ class Climb extends Model
     public function sends() 
     {
         return $this->hasMany(ClimbSend::class);
+    }
+
+    /**
+     * Get the climb's wall.
+     */
+    public function wall()
+    {
+        return $this->belongsTo(Wall::class);
     }
 
     /**
@@ -147,6 +157,16 @@ class Climb extends Model
         return (int) $this->sends()->avg('rating');
 
         return $ratings;
+    }
+
+    public function getWallAttribute()
+    {
+        return $this->wall()->first();
+    }
+
+    public function getUserAttribute()
+    {
+        return $this->user()->first();
     }
 }
 
