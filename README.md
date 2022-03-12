@@ -16,10 +16,19 @@ The back-end Laravel application that supports the Peak ecosystem.
 
 ## Installation
 
-1. Clone the repository 
-2. Run `composer install` in the root directory
-3. Copy `.env.example` into a new `.env` file
-4. Run `php artisan key:generate`
-5. Create a MySQL database on your local server and update the `.env` file accordingly.
+1. Clone the repository.
+2. Run `composer install` in the root directory.
+3. Copy `.env.example` into a new `.env` file, update as necessary.
+4. Run `php artisan key:generate`,
 6. Run `php artisan migrate` to install the database structure.
 7. Run `php artisan passport:keys` to generate the encryption keys required by Laravel Passport.
+
+## Local Development with Laravel Sail
+
+1. Clone the repository.
+1. Run `composer install` in the root directory.
+3. Copy `.env.example` into a new `.env` file.
+4. Run `php artisan key:generate`
+1. Start [Laravel Sail](https://laravel.com/docs/9.x/sail) with `./vendor/bin/sail up`.
+2. Run `./vendor/bin/sail artisan migrate` to install the database structure.
+3. Run `./vendor/bin/sail artisan passport:keys` to generate the encryption keys required by Laravel Passport.
