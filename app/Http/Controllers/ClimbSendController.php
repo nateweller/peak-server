@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Models\ClimbSend;
 
@@ -34,6 +35,18 @@ class ClimbSendController extends Controller
         }
 
         return $climbSends->get();
+    }
+
+    /**
+     * Display a listing of the current user's sends.
+     * @param \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Response
+     */
+    public function log(Request $request)
+    {
+        return ClimbSend::where('user_id', $request->user()->id)
+                    ->orderBy('created_at')
+                    ->get();
     }
 
     /**
@@ -111,7 +124,7 @@ class ClimbSendController extends Controller
      * @param  \App\Models\ClimbSend  $climbSend
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Climb $climbSend)
+    public function destroy(ClimbSend $climbSend)
     {
         return $climbSend->delete();
     }

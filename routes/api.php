@@ -60,6 +60,7 @@ Route::middleware('auth:api')->apiResource('/sends', ClimbSendController::class)
 // Grading
 Route::apiResource('/grading_systems', GradingSystemController::class);
 Route::middleware('auth:api')->apiResource('/grading_grades', GradingGradeController::class);
+Route::middleware('auth:api')->get('/log', [ClimbSendController::class, 'log']);
 
 // Colors
 Route::middleware('auth:api')->apiResource('/climb_colors', ClimbColorController::class);
